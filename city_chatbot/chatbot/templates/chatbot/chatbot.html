@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ask a Question</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        #chat-box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            height: 300px;
+            overflow-y: scroll;
+            background-color: #f9f9f9;
+            margin-bottom: 15px;
+        }
+
+        .user-message {
+            text-align: right;
+            color: blue;
+            margin: 5px 0;
+        }
+
+        .bot-response {
+            text-align: left;
+            color: green;
+            margin: 5px 0;
+        }
+
+        #ask-form {
+            display: flex;
+        }
+
+        #question {
+            flex-grow: 1;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 5px 15px;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Ask a Question about the Municipal Code</h2>
+
+    <div id="chat-box"></div>
+
+    <form id="ask-form" method="post">
+        {% csrf_token %}
+        <input type="text" name="question" id="question" placeholder="Type your question..." required />
+        <button type="submit">Ask</button>
+    </form>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const form = document.getElementById('ask-form');
+        const input = document.getElementById('question');
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const question = input.value.trim();
+            if (!question) return;
+
+            // Show user's question
+            chatBox.innerHTML += `<div class="user-message"><strong>You:</strong> ${question}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Send question to server
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            const response = await fetch("{% url 'ask_question' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({ question: question })
+            });
+
+            const data = await response.json();
+            chatBox.innerHTML += `<div class="bot-response"><strong>Bot:</strong> ${data.response}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            input.value = '';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<h2>Scrape a Website</h2>
+
+<form action="{% url 'scrape_url' %}" method="post">
+    {% csrf_token %}
+    
+    <label for="url">Enter a URL:</label>
+    <input type="url" name="url" required><br>
+
+    <label for="category">Optional Category:</label>
+    <select name="category">
+      <option value="">Auto-categorize</option>
+      {% for cat in categories %}
+        <option value="{{ cat.value }}">{{ cat.label }}</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit">Scrape</button>
+</form>

@@ -1,0 +1,17 @@
+/chatbot_data/
+    /municipal_code.txt          # City laws, zoning, codes
+    /government_and_officials.txt # Mayor, city council, contact info
+    /city_history.txt            # Historical events, landmarks
+    /current_events.txt          # City news, events
+    /public_services.txt         # Parks, trash collection, services
+    /public_health_safety.txt    # Healthcare, crime rates
+    /local_economy.txt           # Business, economy
+    /education_and_schools.txt   # Schools, education
+    /transportation.txt          # Roads, transit, traffic
+    /environment.txt             # Green initiatives
+    /demographics.txt            # Population stats
+    /cultural_community.txt      # Arts, culture
+    /weather_and_seasonal.txt    # Weather, seasonal trends
+    /emergency_services.txt      # Fire, police, emergency alerts
+    /government_services.txt     # Permits, licenses, public records
+    /city_events.txt             # Events, festivals

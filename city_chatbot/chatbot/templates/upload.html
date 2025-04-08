@@ -1,0 +1,15 @@
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="pdf_file">Upload PDF:</label>
+    <input type="file" name="pdf_file" accept=".pdf" required>
+  
+    <label for="category">Optional Category:</label>
+    <select name="category">
+      <option value="">Auto-categorize</option>
+      {% for cat in categories %}
+        <option value="{{ cat.value }}">{{ cat.label }}</option>
+      {% endfor %}
+    </select>
+  
+    <button type="submit">Upload</button>
+  </form>
